@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Search from './components/Search';
+import UserList from './components/UserList';
+import { User } from "./interfaces/types";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  let [isLoaded, setLoad] = React.useState(false)
+  let [items, setItems] = React.useState<User[]>([])
+  let [inputValue, setValue] = React.useState('');
+  let [error, setError] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        let response = await fetch("https://jsonplaceholder.typicode.com/users");
+        const users = await response.json();
+        setItems(users);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoad(true);
+      }
+    }
+    fetchData()
+
+  }, [])
+
+  function updateInput(value: string) {
+    setValue(value);
+  }
+
+  if (error) {
+    return (
+      <div className="error-message">
+        Something went wrong.{error.message}
+      </div>
+    )
+  } else if (!isLoaded) {
+    return <div>Loading...</div>
+  } else {
+    return <div className="App">
+      <Search value={inputValue} checkChange={updateInput} />
+      <UserList users={items} inputValue={inputValue} />
     </div>
-  );
+  }
 }
 
 export default App;
