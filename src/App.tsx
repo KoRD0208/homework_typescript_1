@@ -38,13 +38,7 @@ function App() {
 
   if (error) {
     return <Alert severity="error">Something went wrong.{error.message}</Alert>;
-  }
-  // else if (!isLoaded) {
-  //   return (
-
-  //   // <div>Loading...</div>;
-  // }
-  else {
+  } else {
     return (
       <div className="App">
         {!isLoaded ? (

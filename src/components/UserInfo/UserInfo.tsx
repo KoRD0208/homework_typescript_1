@@ -1,12 +1,12 @@
 import React from "react";
-import { UserProps } from "../../types";
+import { UserInfoProps } from "../../types";
 import { PostProps } from "../../types";
 import { Card, CardContent, List } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { ListItem } from "@mui/material";
 
-function UserInfo({ userProps }: UserProps) {
+function UserInfo({ userProps }: UserInfoProps) {
   let [amount, setAmount] = React.useState<string>("");
   let [addictionInfo, setAddictionInfo] = React.useState<PostProps[]>([]);
 

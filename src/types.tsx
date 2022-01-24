@@ -5,12 +5,12 @@ export interface User {
   email: string;
 }
 
-export interface UsersProps {
+export interface UserListProps {
   users: User[];
   inputValue: string;
 }
 
-export interface UserProps {
+export interface UserInfoProps {
   userProps: User;
 }
 

@@ -1,9 +1,9 @@
 import React from "react";
 import UserInfo from "../UserInfo/UserInfo";
-import { UsersProps } from "../../types";
+import { UserListProps } from "../../types";
 import List from "./List/List";
 
-function UserList({ users, inputValue }: UsersProps) {
+function UserList({ users, inputValue }: UserListProps) {
   return (
     <List>
       {users
