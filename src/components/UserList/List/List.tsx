@@ -1,7 +1,11 @@
 import React, { FC } from "react";
 import classes from "./UserList.module.css";
 
-const List: FC = ({ children }) => {
+interface ListProps {
+  children: React.ReactNode;
+}
+
+const List = ({ children }: ListProps) => {
   return <div className={classes.UserList}>{children}</div>;
 };
 

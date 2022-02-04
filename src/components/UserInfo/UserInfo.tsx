@@ -1,36 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { UserInfoProps } from "../../types";
 import { PostProps } from "../../types";
 import { Card, CardContent, List } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { ListItem } from "@mui/material";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  Link,
+  Outlet,
+} from "react-router-dom";
 
 function UserInfo({ userProps }: UserInfoProps) {
-  let [amount, setAmount] = React.useState<string>("");
-  let [addictionInfo, setAddictionInfo] = React.useState<PostProps[]>([]);
+  // let [amount, setAmount] = React.useState<string>("");
+  // let [expandedInfo, setExpandedInfo] = React.useState<PostProps[]>([]);
 
-  async function getAuthorInfo(userId: number) {
-    let response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    let data = await response.json();
+  // useEffect(() => {
+  //   async function getAuthorInfo() {
+  //     let response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  //     let data = await response.json();
 
-    let posts = data.filter((item: PostProps) => item.userId === userId);
-    let amountOfPosts = data.reduce((acc: any, item: PostProps) => {
-      if (!acc[item.userId]) {
-        acc[item.userId] = 1;
-      } else {
-        acc[item.userId] += 1;
-      }
-      return acc;
-    }, {});
-    setAmount("Amount of posts: " + Object.values(amountOfPosts)[userId - 1]);
-    setAddictionInfo(posts);
-  }
+  //     // let posts = data.filter((item: PostProps) => item.userId);
+  //     // let amountOfPosts = data.reduce((acc: any, item: PostProps) => {
+  //     //   if (!acc[item.userId]) {
+  //     //     acc[item.userId] = 1;
+  //     //   } else {
+  //     //     acc[item.userId] += 1;
+  //     //   }
+  //     //   return acc;
+  //     // }, {});
+  //     setExpandedInfo(data);
+  //     console.log();
+  //   }
 
-  function hide() {
-    setAmount("");
-    setAddictionInfo([]);
-  }
+  //   getAuthorInfo();
+  // }, []);
+
+  // function hide() {
+  //   // setAmount("");
+  //   setExpandedInfo([]);
+  // }
 
   return (
     <Card
@@ -51,26 +63,16 @@ function UserInfo({ userProps }: UserInfoProps) {
           {userProps.email}
         </Typography>
         <Button
-          onClick={() => {
-            getAuthorInfo(userProps.id);
-          }}
+        // onClick={() => {
+        //   getAuthorInfo(userProps.id);
+        // }}
         >
-          Get author Info
+          {/* <Outlet> */}
+          <Link to={`/${userProps.id}`} key={userProps.id}>
+            Get author Info
+          </Link>
+          <Outlet />
         </Button>
-        <Typography>{amount}</Typography>
-        <List>
-          {addictionInfo.length > 0 ? <h3>Posts:</h3> : null}
-          {addictionInfo.map((post) => {
-            return (
-              <ListItem sx={{ fontWeight: 900 }} key={post.id}>
-                {post.title}
-              </ListItem>
-            );
-          })}
-          {addictionInfo.length > 0 ? (
-            <Button onClick={hide}>Hide</Button>
-          ) : null}
-        </List>
       </CardContent>
     </Card>
   );
